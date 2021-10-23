@@ -1,8 +1,11 @@
+import { Switch, Route } from "react-router";
+import Landing from "@views/landing";
+
 const App = () => {
   return (
-    <>
-      <p>Hello wolrd</p>
-    </>
+    <Switch>
+      <Route exact path="/" component={Landing} />
+    </Switch>
   );
 };
 
