@@ -55,6 +55,7 @@ const GoogleButton = ({ onFinish, ...props }) => {
       render={(renderProps) => (
         <Button
           colorScheme="gray"
+          size="lg"
           variant="outline"
           isFullWidth
           disabled={renderProps.disabled || loading}

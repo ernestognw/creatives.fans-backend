@@ -61,6 +61,7 @@ const FacebookButton = ({ onFinish, ...props }) => {
           colorScheme="blue"
           variant="outline"
           isFullWidth
+          size="lg"
           disabled={renderProps.isDisabled}
           leftIcon={<FaFacebookF />}
           isLoading={loading}
