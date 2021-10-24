@@ -4,7 +4,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import client from "@graphql";
-import { UserProvider } from '@providers/user'
+import { UserProvider } from "@providers/user";
+import { LayoutProvider } from "@providers/layout";
 import App from "./App";
 
 ReactDOM.render(
@@ -13,7 +14,9 @@ ReactDOM.render(
       <Router basename="/">
         <ChakraProvider>
           <UserProvider>
-            <App />
+            <LayoutProvider>
+              <App />
+            </LayoutProvider>
           </UserProvider>
         </ChakraProvider>
       </Router>
