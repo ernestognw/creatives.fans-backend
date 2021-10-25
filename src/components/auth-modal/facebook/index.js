@@ -19,7 +19,6 @@ const FacebookButton = ({ onFinish, ...props }) => {
     }
 
     const { accessToken } = response;
-    console.log(response)
 
     try {
       await client.post("/login/facebook", { fbAccessToken: accessToken });
