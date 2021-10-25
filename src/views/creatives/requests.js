@@ -5,8 +5,6 @@ const GET_USERS = gql`
     users(search: $search, params: $params) {
       info {
         count
-        pages
-        prev
         next
       }
       results {

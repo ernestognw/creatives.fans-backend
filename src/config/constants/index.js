@@ -1,6 +1,10 @@
 const routes = {
   INDEX: "/",
   CREATIVES: "/creatives",
+  PROFILE: {
+    RECEIVED: '/@:username',
+    SENT: '/@:username/sent',
+  }
 };
 
 const profileImgFallback =

@@ -20,7 +20,7 @@ const Header = () => {
       )}
       <Flex flexGrow={1} justifyContent="center">
         {title ? (
-          <Heading size="lg">{title}</Heading>
+          <Heading size="md">{title}</Heading>
         ) : (
           <Logo src="./logo.svg" alt="Creatives fans" />
         )}

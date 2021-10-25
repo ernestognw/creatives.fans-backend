@@ -7,7 +7,23 @@ const link = ApolloLink.from([authLink, httpLink]);
 const client = new ApolloClient({
   link,
   credentials: "include",
-  cache: new InMemoryCache({}),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          users: {
+            keyArgs: false,
+            merge: (existing, incoming) => {
+              return {
+                info: incoming.info,
+                results: [...(existing?.results ?? []), ...incoming.results],
+              };
+            },
+          },
+        },
+      },
+    },
+  }),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: "cache-and-network",

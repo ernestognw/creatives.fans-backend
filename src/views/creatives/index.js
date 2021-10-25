@@ -1,8 +1,7 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Input,
-  InputGroup,
-  InputLeftElement,
+  IconButton,
   Grid,
   Flex,
   Spinner,
@@ -10,63 +9,68 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
-import { useDebounce } from "use-debounce";
 import { useTitle } from "@providers/layout";
 import { useQuery } from "@apollo/client";
-import { SearchIcon, ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { SearchIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { GET_USERS } from "./requests";
 import { searchableFields } from "@config/constants/users";
 import CreativeCard from "./creative-card";
 
+const pageSize = 10;
+
 const Creatives = () => {
   useTitle("Creativos");
-  const [page, setPage] = useState(1);
-  const [searchInput, setSearchInput] = useState("");
-  const [debouncedSearch] = useDebounce(searchInput, 500);
+  const [fetchingMore, setFetchingMore] = useState(false);
+  const [search, setSearch] = useState("");
 
-  const search = useMemo(
-    () =>
-      searchableFields.reduce((acc, curr) => {
-        acc[curr] = debouncedSearch;
+  const { data, loading, fetchMore, refetch } = useQuery(GET_USERS, {
+    variables: {
+      search: searchableFields.reduce((acc, curr) => {
+        acc[curr] = search;
         return acc;
       }, {}),
-    [debouncedSearch]
-  );
-
-  const { data, loading } = useQuery(GET_USERS, {
-    variables: {
-      search,
       params: {
-        page,
-        pageSize: 10,
+        page: 1,
+        pageSize,
       },
     },
+    fetchPolicy: "cache-first",
   });
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    refetch();
+  };
+
+  const handleNextPage = async () => {
+    setFetchingMore(true);
+    await fetchMore({
+      variables: {
+        params: {
+          pageSize,
+          page: data?.users.info.next,
+        },
+      },
+    });
+    setFetchingMore(false);
+  };
 
   return (
     <>
-      <InputGroup mb={6}>
-        <InputLeftElement
-          pointerEvents="none"
-          height="100%"
-          children={<SearchIcon boxSize="19" color="gray.300" />}
-        />
+      <Flex as="form" mb={2} onSubmit={handleSearch}>
         <Input
-          value={searchInput}
-          onChange={({ target: { value } }) => {
-            setSearchInput(value);
-            setPage(1);
-          }}
+          value={search}
+          onChange={({ target: { value } }) => setSearch(value)}
           size="lg"
           placeholder="Buscar..."
         />
-      </InputGroup>
-      <Flex justifyContent="space-between" mb={5}>
-        <Text color="gray.400">
-          Página {page} de {data?.users?.info.pages}
-        </Text>
-        <Text color="gray.400">{data?.users?.info.count} fans en total</Text>
+        <IconButton type="submit" size="lg" ml={2} icon={<SearchIcon />} />
       </Flex>
+      {!loading && (
+        <Text mb={4} textAlign="right" color="gray.400">
+          {data?.users?.info.count} fans en total
+        </Text>
+      )}
       {loading && (
         <Flex width="100%" p={20} justifyContent="center" alignItems="center">
           <Spinner size="lg" />
@@ -90,26 +94,20 @@ const Creatives = () => {
           )
         )}
       </Grid>
-      <Flex mt={5} justifyContent="space-between">
+      {data?.users.info.next && (
         <Button
-          leftIcon={<ArrowBackIcon />}
+          leftIcon={<ChevronDownIcon />}
           variant="outline"
           size="lg"
-          onClick={() => setPage(data?.users.info.prev)}
-          disabled={!data?.users.info.prev}
+          mt={5}
+          isLoading={fetchingMore}
+          disabled={fetchingMore}
+          isFullWidth
+          onClick={handleNextPage}
         >
-          Anterior
+          Cargar más
         </Button>
-        <Button
-          rightIcon={<ArrowForwardIcon />}
-          variant="outline"
-          size="lg"
-          onClick={() => setPage(data?.users.info.next)}
-          disabled={!data?.users.info.next}
-        >
-          Siguiente
-        </Button>
-      </Flex>
+      )}
     </>
   );
 };
