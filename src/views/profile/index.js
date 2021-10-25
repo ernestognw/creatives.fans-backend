@@ -11,6 +11,7 @@ import {
   Tab,
   Button,
   IconButton,
+  useClipboard,
 } from "@chakra-ui/react";
 import { FaFacebook, FaInstagram, FaLink, FaTwitter } from "react-icons/fa";
 import { Switch, useParams, Route, Link } from "react-router-dom";
@@ -19,9 +20,11 @@ import { useTitle } from "@providers/layout";
 import { routes, social } from "@config/constants";
 import Sent from "./sent";
 import Received from "./received";
+import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
 
 const Profile = () => {
   const { username } = useParams();
+  useTitle(`Perfil de @${username}`);
 
   const { data, loading } = useQuery(GET_USER, {
     variables: {
@@ -29,7 +32,9 @@ const Profile = () => {
     },
   });
 
-  useTitle(`Perfil de @${username}`);
+  const { hasCopied, onCopy } = useClipboard(
+    `https://creatives.fans/@${username}`
+  );
 
   if (loading)
     return (
@@ -64,6 +69,13 @@ const Profile = () => {
               creatives.fans/
             </Text>
             @{username}
+            <IconButton
+              size="xs"
+              p={0}
+              variant="ghost"
+              onClick={onCopy}
+              icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
+            />
           </Text>
           <Flex mt={2} justifyContent="center">
             {data?.user.social.facebook && (
