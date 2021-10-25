@@ -1,22 +1,18 @@
-import { Box, Flex, Text, Image, Heading } from "@chakra-ui/react";
+import { Box, Flex, Text, Heading, Avatar } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { profileImgFallback, routes } from "@config/constants";
+import { routes } from "@config/constants";
 
 const CreativeCard = ({ username, firstName, lastName, profileImg }) => {
   return (
     <Link to={routes.PROFILE.RECEIVED.replace(":username", username)}>
       <Flex direction="column" alignItems="center">
-        <Image
-          borderRadius="full"
-          boxSize="70px"
+        <Avatar
+          size="lg"
           src={profileImg}
-          alt={`${firstName} ${lastName}`}
-          fallbackSrc={profileImgFallback}
-          zIndex={10000}
-          borderColor="white"
+          name={`${firstName} ${lastName}`}
+          showBorder
           borderWidth="4px"
-          borderStyle="solid"
         />
         <Box
           borderRadius={12}

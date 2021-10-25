@@ -4,6 +4,13 @@ import httpLink from "./links/http";
 
 const link = ApolloLink.from([authLink, httpLink]);
 
+const mergePlural = (existing, incoming) => {
+  return {
+    info: incoming.info,
+    results: [...(existing?.results ?? []), ...incoming.results],
+  };
+};
+
 const client = new ApolloClient({
   link,
   credentials: "include",
@@ -12,13 +19,12 @@ const client = new ApolloClient({
       Query: {
         fields: {
           users: {
-            keyArgs: false,
-            merge: (existing, incoming) => {
-              return {
-                info: incoming.info,
-                results: [...(existing?.results ?? []), ...incoming.results],
-              };
-            },
+            keyArgs: ["id", "search"],
+            merge: mergePlural,
+          },
+          supports: {
+            keyArgs: ["id", "search", "fan", "creative"],
+            merge: mergePlural,
           },
         },
       },
@@ -26,11 +32,11 @@ const client = new ApolloClient({
   }),
   defaultOptions: {
     watchQuery: {
-      fetchPolicy: "cache-and-network",
+      fetchPolicy: "cache-first",
       errorPolicy: "all",
     },
     query: {
-      fetchPolicy: "cache-and-network",
+      fetchPolicy: "cache-first",
       errorPolicy: "all",
     },
     mutate: {

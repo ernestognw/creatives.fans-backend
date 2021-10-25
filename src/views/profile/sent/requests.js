@@ -1,0 +1,33 @@
+import { gql } from "@apollo/client";
+
+const GET_SUPPORTS_RECEIVED = gql`
+  query supports($params: QueryParams!, $search: SupportSearchInput!, $fan: QueryOperators) {
+    supports(params: $params, search: $search, fan: $fan){
+      info {
+        next
+        count
+      }
+      results {
+        id
+        description
+        amount
+        fan {
+          id
+          username
+          firstName
+          lastName
+          profileImg
+        }
+        creative {
+          id
+          username
+          firstName
+          lastName
+          profileImg
+        }
+      }
+    }
+  }
+`;
+
+export { GET_SUPPORTS_RECEIVED };

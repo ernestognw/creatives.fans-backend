@@ -23,23 +23,28 @@ const Creatives = () => {
   const [fetchingMore, setFetchingMore] = useState(false);
   const [search, setSearch] = useState("");
 
-  const { data, loading, fetchMore, refetch } = useQuery(GET_USERS, {
-    variables: {
-      search: searchableFields.reduce((acc, curr) => {
-        acc[curr] = search;
-        return acc;
-      }, {}),
-      params: {
-        page: 1,
-        pageSize,
-      },
+  const variables = {
+    search: {},
+    params: {
+      page: 1,
+      pageSize,
     },
+  };
+
+  const { data, loading, fetchMore, refetch } = useQuery(GET_USERS, {
+    variables,
     fetchPolicy: "cache-first",
   });
 
   const handleSearch = (event) => {
     event.preventDefault();
-    refetch();
+    refetch({
+      ...variables,
+      search: searchableFields.reduce((acc, curr) => {
+        acc[curr] = search;
+        return acc;
+      }, {}),
+    });
   };
 
   const handleNextPage = async () => {

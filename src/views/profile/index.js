@@ -3,18 +3,20 @@ import {
   Box,
   Flex,
   Text,
-  Image,
+  Avatar,
   Heading,
   Spinner,
   Tabs,
   TabList,
   Tab,
+  Button,
+  IconButton,
 } from "@chakra-ui/react";
+import { FaFacebook, FaInstagram, FaLink, FaTwitter } from "react-icons/fa";
 import { Switch, useParams, Route, Link } from "react-router-dom";
 import { GET_USER } from "./requests";
-import { profileImgFallback } from "@config/constants";
-import { useTitle } from "../../providers/layout";
-import { routes } from "../../config/constants";
+import { useTitle } from "@providers/layout";
+import { routes, social } from "@config/constants";
 import Sent from "./sent";
 import Received from "./received";
 
@@ -39,16 +41,12 @@ const Profile = () => {
   return (
     <>
       <Flex direction="column" alignItems="center">
-        <Image
-          borderRadius="full"
-          boxSize="120px"
+        <Avatar
+          size="2xl"
           src={data?.user.profileImg}
-          alt={`${data?.user.firstName} ${data?.user.lastName}`}
-          fallbackSrc={profileImgFallback}
-          zIndex={10000}
-          borderColor="white"
+          name={`${data?.user.firstName} ${data?.user.lastName}`}
+          showBorder
           borderWidth="4px"
-          borderStyle="solid"
         />
         <Box
           borderRadius={12}
@@ -67,6 +65,65 @@ const Profile = () => {
             </Text>
             @{username}
           </Text>
+          <Flex mt={2} justifyContent="center">
+            {data?.user.social.facebook && (
+              <IconButton
+                as="a"
+                target="_blank"
+                href={social.facebook.url(data?.user.social.facebook)}
+                mx={2}
+                size="sm"
+                variant="ghost"
+                icon={<FaFacebook color={social.facebook.color} />}
+              />
+            )}
+            {data?.user.social.instagram && (
+              <IconButton
+                as="a"
+                target="_blank"
+                href={social.instagram.url(data?.user.social.instagram)}
+                mx={2}
+                size="sm"
+                variant="ghost"
+                icon={<FaInstagram color={social.instagram.color} />}
+              />
+            )}
+            {data?.user.social.twitter && (
+              <IconButton
+                as="a"
+                target="_blank"
+                href={social.twitter.url(data?.user.social.twitter)}
+                mx={2}
+                size="sm"
+                variant="ghost"
+                icon={<FaTwitter color={social.twitter.color} />}
+              />
+            )}
+            {data?.user.social.website && (
+              <IconButton
+                as="a"
+                target="_blank"
+                href={data?.user.social.website}
+                mx={2}
+                size="sm"
+                variant="ghost"
+                icon={<FaLink color={social.website.color} />}
+              />
+            )}
+          </Flex>
+        </Box>
+        <Button size="lg" mt={5} isFullWidth colorScheme="yellow">
+          Apóyame 🖤
+        </Button>
+        <Box
+          mt={5}
+          borderRadius={12}
+          backgroundColor="gray.100"
+          width="100%"
+          p={3}
+          fontStyle={data?.user?.description ? "normal" : "italic"}
+        >
+          {data?.user?.description ?? "Sin descripción"}
         </Box>
         <Tabs
           mt={5}
@@ -78,22 +135,32 @@ const Profile = () => {
           <TabList>
             <Tab
               as={Link}
+              replace
               to={routes.PROFILE.RECEIVED.replace(":username", username)}
             >
               <Text mr={2}>😎</Text>
-              Recibido
+              Recibido ({data?.user.supportsReceived.info.count})
             </Tab>
             <Tab
               as={Link}
+              replace
               to={routes.PROFILE.SENT.replace(":username", username)}
             >
               <Text mr={2}>🤓</Text>
-              Enviado
+              Enviado ({data?.user.supportsGiven.info.count})
             </Tab>
           </TabList>
           <Switch>
-            <Route exact path={routes.PROFILE.RECEIVED} component={Received} />
-            <Route exact path={routes.PROFILE.SENT} component={Sent} />
+            <Route
+              exact
+              path={routes.PROFILE.RECEIVED}
+              render={() => <Received creative={data?.user.id} />}
+            />
+            <Route
+              exact
+              path={routes.PROFILE.SENT}
+              render={() => <Sent fan={data?.user.id} />}
+            />
           </Switch>
         </Tabs>
       </Flex>

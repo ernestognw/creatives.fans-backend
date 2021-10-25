@@ -17,6 +17,16 @@ const GET_USER = gql`
         website
       }
       createdAt
+      supportsReceived {
+        info {
+          count
+        }
+      }
+      supportsGiven {
+        info {
+          count
+        }
+      }
     }
   }
 `
