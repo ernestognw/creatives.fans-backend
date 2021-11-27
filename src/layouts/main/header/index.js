@@ -22,7 +22,7 @@ const Header = () => {
         {title ? (
           <Heading size="md">{title}</Heading>
         ) : (
-          <Logo src="./logo.svg" alt="Creatives fans" />
+          <Logo src="/logo.svg" alt="Creatives fans" />
         )}
       </Flex>
     </Flex>

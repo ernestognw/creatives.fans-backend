@@ -2,7 +2,7 @@ import { useTitle } from "@providers/layout";
 import { FaFacebook, FaInstagram, FaLink, FaTwitter } from "react-icons/fa";
 import { useUser } from "@providers/user";
 import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
-import { IoExitOutline } from "react-icons/io5";
+import { IoExitOutline, IoCardOutline } from "react-icons/io5";
 import { StarIcon, EditIcon } from "@chakra-ui/icons";
 import { routes, social } from "@config/constants";
 import { Link } from "react-router-dom";
@@ -113,6 +113,18 @@ const Main = () => {
           isFullWidth
         >
           Editar perfi
+        </Button>
+      </Link>
+      <Link to={routes.DASHBOARD.PAYMENT_METHODS.MAIN}>
+        <Button
+          leftIcon={<IoCardOutline />}
+          mt={5}
+          colorScheme="gray"
+          variant="outline"
+          size="lg"
+          isFullWidth
+        >
+          Métodos de pago
         </Button>
       </Link>
       <Button

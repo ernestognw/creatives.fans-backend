@@ -3,6 +3,7 @@ import { routes } from "@config/constants";
 import Main from "./main";
 import MyFans from "./my-fans";
 import EditProfile from "./edit-profile";
+import PaymentMethods from "./payment-methods";
 
 const Dashboard = () => {
   return (
@@ -14,6 +15,10 @@ const Dashboard = () => {
           exact
           path={routes.DASHBOARD.EDIT_PROFILE}
           component={EditProfile}
+        />
+        <Route
+          path={routes.DASHBOARD.PAYMENT_METHODS.MAIN}
+          component={PaymentMethods}
         />
       </Switch>
     </>

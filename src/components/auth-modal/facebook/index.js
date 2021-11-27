@@ -27,7 +27,7 @@ const FacebookButton = ({ onFinish, ...props }) => {
       setIsLogged(true);
     } catch (err) {
       toast({
-        title: "An error has occurred",
+        title: "Ocurrió un error",
         description: err.message,
         status: "error",
         isClosable: true,
@@ -38,7 +38,7 @@ const FacebookButton = ({ onFinish, ...props }) => {
 
   const onFailure = () => {
     toast({
-      title: "An error has occurred",
+      title: "Ocurrió un error",
       status: "error",
       isClosable: true,
     });

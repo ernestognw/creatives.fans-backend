@@ -9,6 +9,10 @@ const routes = {
     MAIN: "/dashboard",
     MY_FANS: "/dashboard/my-fans",
     EDIT_PROFILE: "/dashboard/edit-profile",
+    PAYMENT_METHODS: {
+      MAIN: "/dashboard/payment-methods",
+      ADD: "/dashboard/payment-methods/add",
+    },
   },
 };
 

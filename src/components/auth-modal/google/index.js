@@ -22,7 +22,7 @@ const GoogleButton = ({ onFinish, ...props }) => {
       setIsLogged(true);
     } catch (err) {
       toast({
-        title: "An error has occurred",
+        title: "Ocurrió un error",
         description: err.message,
         status: "error",
         isClosable: true,
@@ -34,7 +34,7 @@ const GoogleButton = ({ onFinish, ...props }) => {
   const onFailure = (err) => {
     if (err.error !== "popup_closed_by_user") {
       toast({
-        title: "An error has occurred",
+        title: "Ocurrió un error",
         status: "error",
         isClosable: true,
       });

@@ -18,4 +18,8 @@ const facebook = {
   appId: process.env.REACT_APP_FACEBOOK_APP_ID,
 };
 
-export { env, apiUrl, authUrl, google, facebook };
+const stripe = {
+  publicKey: process.env.REACT_APP_STRIPE_PUBLIC_KEY,
+};
+
+export { env, apiUrl, authUrl, google, facebook, stripe };
