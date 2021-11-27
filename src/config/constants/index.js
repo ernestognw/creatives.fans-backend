@@ -5,6 +5,10 @@ const routes = {
     RECEIVED: "/@:username",
     SENT: "/@:username/sent",
   },
+  DASHBOARD: {
+    MAIN: "/dashboard",
+    MY_FANS: "/dashboard/my-fans",
+  },
 };
 
 const social = {

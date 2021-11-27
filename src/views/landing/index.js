@@ -41,16 +41,18 @@ const Landing = () => {
       </Link>
       {isLogged && (
         <>
-          <Button
-            leftIcon={<MdDashboard />}
-            mt={5}
-            colorScheme="gray"
-            variant="outline"
-            size="lg"
-            isFullWidth
-          >
-            Dashboard
-          </Button>
+          <Link to={routes.DASHBOARD.MAIN}>
+            <Button
+              leftIcon={<MdDashboard />}
+              mt={5}
+              colorScheme="gray"
+              variant="outline"
+              size="lg"
+              isFullWidth
+            >
+              Dashboard
+            </Button>
+          </Link>
           <Button
             onClick={logout}
             leftIcon={<IoExitOutline />}

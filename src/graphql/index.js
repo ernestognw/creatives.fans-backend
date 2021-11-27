@@ -19,7 +19,7 @@ const client = new ApolloClient({
       Query: {
         fields: {
           users: {
-            keyArgs: ["id", "search"],
+            keyArgs: ["id", "search", "supports", "supportedBy"],
             merge: mergePlural,
           },
           supports: {
