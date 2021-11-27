@@ -8,6 +8,7 @@ const UPDATE_USER = gql`
       firstName
       lastName
       description
+      profileImg
     }
   }
 `;

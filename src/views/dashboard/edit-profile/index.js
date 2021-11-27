@@ -4,6 +4,7 @@ import { Flex, Spinner, Button, useToast } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { routes } from "@config/constants";
 import UserForm from "./user-form";
+import EditPhoto from "./edit-photo";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER } from "./requests";
 
@@ -45,16 +46,23 @@ const EditProfile = () => {
 
   return (
     <>
+      <EditPhoto
+        userId={user.id}
+        profileImg={user.profileImg}
+        firstName={user.firstName}
+        lastName={user.lastName}
+        onSave={onSubmit}
+      />
       <UserForm
         defaultValues={{
-          username: user?.username,
-          firstName: user?.firstName,
-          lastName: user?.lastName,
-          description: user?.description,
+          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          description: user.description,
         }}
         onSubmit={onSubmit}
       />
-      <Link to={routes.PROFILE.RECEIVED.replace(":username", user?.username)}>
+      <Link to={routes.PROFILE.RECEIVED.replace(":username", user.username)}>
         <Button mt={5} colorScheme="yellow" variant="link" isFullWidth>
           Ir a tu perfil
         </Button>

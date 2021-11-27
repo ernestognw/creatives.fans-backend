@@ -1,7 +1,7 @@
 import {
   FormControl,
   FormLabel,
-  FormHelperText,
+  FormErrorMessage,
   Input,
   InputGroup,
   InputLeftElement,
@@ -57,7 +57,7 @@ const UserForm = ({ defaultValues, onSubmit }) => {
           />
         </InputGroup>
         {errors.username && (
-          <FormHelperText>{errors.username.message}</FormHelperText>
+          <FormErrorMessage>{errors.username.message}</FormErrorMessage>
         )}
       </FormControl>
       <FormControl mb={5} isInvalid={errors.firstName}>
@@ -76,7 +76,7 @@ const UserForm = ({ defaultValues, onSubmit }) => {
           />
         </InputGroup>
         {errors.firstName && (
-          <FormHelperText>{errors.firstName.message}</FormHelperText>
+          <FormErrorMessage>{errors.firstName.message}</FormErrorMessage>
         )}
       </FormControl>
       <FormControl mb={5} isInvalid={errors.lastName}>
@@ -95,7 +95,7 @@ const UserForm = ({ defaultValues, onSubmit }) => {
           />
         </InputGroup>
         {errors.lastName && (
-          <FormHelperText>{errors.lastName.message}</FormHelperText>
+          <FormErrorMessage>{errors.lastName.message}</FormErrorMessage>
         )}
       </FormControl>
       <FormControl mb={5}>
