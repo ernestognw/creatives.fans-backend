@@ -8,6 +8,7 @@ const routes = {
   DASHBOARD: {
     MAIN: "/dashboard",
     MY_FANS: "/dashboard/my-fans",
+    EDIT_PROFILE: "/dashboard/edit-profile",
   },
 };
 

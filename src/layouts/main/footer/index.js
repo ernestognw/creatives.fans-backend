@@ -5,8 +5,8 @@ const Footer = () => {
   return (
     <Box py={5}>
       <Flex alignItems="center" justifyContent="center">
-        <Icon src="./face.png" alt="Creatives fans" mr="5px" />
-        <Logo src="./logo.svg" alt="Creatives fans" />
+        <Icon src="/face.png" alt="Creatives fans" mr="5px" />
+        <Logo src="/logo.svg" alt="Creatives fans" />
         <Text fontWeight="800" ml="5px" fontSize="sm">
           © {new Date().getFullYear()}
         </Text>

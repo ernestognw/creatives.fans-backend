@@ -2,7 +2,8 @@ import { useTitle } from "@providers/layout";
 import { FaFacebook, FaInstagram, FaLink, FaTwitter } from "react-icons/fa";
 import { useUser } from "@providers/user";
 import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
-import { StarIcon } from "@chakra-ui/icons";
+import { IoExitOutline } from "react-icons/io5";
+import { StarIcon, EditIcon } from "@chakra-ui/icons";
 import { routes, social } from "@config/constants";
 import { Link } from "react-router-dom";
 import {
@@ -18,7 +19,7 @@ import {
 const Main = () => {
   useTitle("Dashboard");
 
-  const { user } = useUser();
+  const { user, logout } = useUser();
 
   const { hasCopied, onCopy } = useClipboard(
     `https://creatives.fans/@${user.username}`
@@ -102,6 +103,28 @@ const Main = () => {
           Mis fans
         </Button>
       </Link>
+      <Link to={routes.DASHBOARD.EDIT_PROFILE}>
+        <Button
+          leftIcon={<EditIcon />}
+          mt={5}
+          colorScheme="gray"
+          variant="outline"
+          size="lg"
+          isFullWidth
+        >
+          Editar perfi
+        </Button>
+      </Link>
+      <Button
+        onClick={logout}
+        leftIcon={<IoExitOutline />}
+        mt={5}
+        colorScheme="red"
+        size="lg"
+        isFullWidth
+      >
+        Salir
+      </Button>
     </>
   );
 };
