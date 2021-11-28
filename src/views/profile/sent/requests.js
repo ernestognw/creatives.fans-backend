@@ -1,8 +1,13 @@
 import { gql } from "@apollo/client";
 
-const GET_SUPPORTS_RECEIVED = gql`
-  query supports($params: QueryParams!, $search: SupportSearchInput!, $fan: QueryOperators) {
-    supports(params: $params, search: $search, fan: $fan){
+const GET_SUPPORTS_SENT = gql`
+  query supports(
+    $params: QueryParams!
+    $search: SupportSearchInput!
+    $sortBy: SupportSortInput!
+    $fan: QueryOperators
+  ) {
+    supports(params: $params, search: $search, sortBy: $sortBy, fan: $fan) {
       info {
         next
         count
@@ -30,4 +35,4 @@ const GET_SUPPORTS_RECEIVED = gql`
   }
 `;
 
-export { GET_SUPPORTS_RECEIVED };
+export { GET_SUPPORTS_SENT };

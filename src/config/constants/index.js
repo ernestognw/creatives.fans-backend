@@ -34,4 +34,9 @@ const social = {
   },
 };
 
-export { routes, social };
+const sortOrders = {
+  asc: "asc",
+  desc: "desc",
+};
+
+export { routes, social, sortOrders };

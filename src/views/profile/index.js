@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import {
   Box,
@@ -12,6 +13,7 @@ import {
   Button,
   IconButton,
   useClipboard,
+  useToast,
 } from "@chakra-ui/react";
 import { FaFacebook, FaInstagram, FaLink, FaTwitter } from "react-icons/fa";
 import { Switch, useParams, Route, Link } from "react-router-dom";
@@ -19,14 +21,20 @@ import { GET_USER } from "./requests";
 import { useTitle } from "@providers/layout";
 import { routes, social } from "@config/constants";
 import Sent from "./sent";
+import { useUser } from "@providers/user";
 import Received from "./received";
+import SupportModal from "./support-modal";
 import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
 
 const Profile = () => {
   const { username } = useParams();
   useTitle(`Perfil de @${username}`);
+  const toast = useToast();
+  const { user } = useUser();
+  const [isSupportModalOpen, toggleSupportModal] = useState(false);
+  const isOwner = username === user.username;
 
-  const { data, loading } = useQuery(GET_USER, {
+  const { data, loading, refetch } = useQuery(GET_USER, {
     variables: {
       username,
     },
@@ -124,7 +132,22 @@ const Profile = () => {
             )}
           </Flex>
         </Box>
-        <Button size="lg" mt={5} isFullWidth colorScheme="yellow">
+        <Button
+          onClick={() =>
+            isOwner
+              ? toast({
+                  title: "¡Alto ahí vaquero!",
+                  description: "No puedes enviarte apoyos a ti mismo",
+                  status: "warning",
+                  isClosable: true,
+                })
+              : toggleSupportModal(true)
+          }
+          size="lg"
+          mt={5}
+          isFullWidth
+          colorScheme="yellow"
+        >
           Apóyame 🖤
         </Button>
         <Box
@@ -176,6 +199,12 @@ const Profile = () => {
           </Switch>
         </Tabs>
       </Flex>
+      <SupportModal
+        creative={data?.user?.id}
+        refetch={refetch}
+        isOpen={isSupportModalOpen}
+        onClose={() => toggleSupportModal(false)}
+      />
     </>
   );
 };

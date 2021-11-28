@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import SupportList from "@components/support-list";
 import { useQuery } from "@apollo/client";
-import { searchableFields } from "@config/constants/supports";
+import { sortOrders } from "@config/constants";
+import { searchableFields, sortableFields } from "@config/constants/supports";
 import { GET_SUPPORTS_RECEIVED } from "./requests";
 
 const pageSize = 10;
@@ -16,11 +17,19 @@ const Received = ({ creative }) => {
     creative: {
       eq: creative,
     },
+    sortBy: {
+      field: sortableFields.createdAt,
+      order: sortOrders.desc,
+    },
   };
 
   const { data, loading, refetch, fetchMore } = useQuery(
     GET_SUPPORTS_RECEIVED,
-    { variables, skip: !creative, fetchPolicy: "cache-first" }
+    {
+      variables,
+      skip: !creative,
+      nextFetchPolicy: "cache-first",
+    }
   );
 
   return (

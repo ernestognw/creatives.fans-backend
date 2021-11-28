@@ -24,7 +24,7 @@ const Support = ({ description, amount, fan, creative }) => {
             name={`${fan.firstName} ${fan.lastName}`}
             mr={3}
           >
-            {amount && <AvatarBadge bg="cyan" boxSize="1em" />}
+            {amount > 0 && <AvatarBadge bg="cyan" boxSize="1em" />}
           </Avatar>
         </Link>
         <Link to={routes.PROFILE.RECEIVED.replace(":username", fan.username)}>
@@ -37,9 +37,11 @@ const Support = ({ description, amount, fan, creative }) => {
             </Text>
           </Box>
         </Link>
-        <Tag ml="auto" size="sm" variant="subtle" colorScheme="cyan">
-          <TagLabel>${amount}</TagLabel>
-        </Tag>
+        {amount > 0 && (
+          <Tag ml="auto" size="sm" variant="subtle" colorScheme="cyan">
+            <TagLabel>${amount}</TagLabel>
+          </Tag>
+        )}
       </Flex>
       <Box
         fontStyle={description ? "normal" : "italic"}

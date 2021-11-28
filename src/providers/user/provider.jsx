@@ -42,7 +42,6 @@ const UserProvider = ({ children }) => {
       if (isLogged) {
         const { data } = await client.get("/access");
 
-        console.log(data.accessToken)
         accessToken.set(data.accessToken);
         setToken(data.accessToken);
       }

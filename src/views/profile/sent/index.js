@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import SupportList from "@components/support-list";
 import { useQuery } from "@apollo/client";
-import { searchableFields } from "@config/constants/supports";
-import { GET_SUPPORTS_RECEIVED } from "./requests";
+import { sortOrders } from "@config/constants";
+import { searchableFields, sortableFields } from "@config/constants/supports";
+import { GET_SUPPORTS_SENT } from "./requests";
 
 const pageSize = 10;
 
@@ -16,12 +17,17 @@ const Sent = ({ fan }) => {
     fan: {
       eq: fan,
     },
+    sortBy: {
+      field: sortableFields.createdAt,
+      order: sortOrders.desc,
+    },
   };
 
-  const { data, loading, refetch, fetchMore } = useQuery(
-    GET_SUPPORTS_RECEIVED,
-    { variables, skip: !fan, fetchPolicy: "cache-first" }
-  );
+  const { data, loading, refetch, fetchMore } = useQuery(GET_SUPPORTS_SENT, {
+    variables,
+    skip: !fan,
+    fetchPolicy: "cache-first",
+  });
 
   return (
     <SupportList

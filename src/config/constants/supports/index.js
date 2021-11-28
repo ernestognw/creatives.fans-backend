@@ -1,3 +1,9 @@
 const searchableFields = ["description"];
 
-export { searchableFields };
+const sortableFields = {
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  amount: "amount",
+};
+
+export { searchableFields, sortableFields };
