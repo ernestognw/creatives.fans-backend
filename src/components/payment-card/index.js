@@ -8,6 +8,7 @@ const PaymentCard = ({
   expirationMonth,
   funding: fundingType,
   last4,
+  extra,
   ...props
 }) => {
   return (
@@ -27,9 +28,12 @@ const PaymentCard = ({
         mr={5}
       />
       <Box flex={1}>
-        <Text fontWeight="600" fontSize={20}>
-          **** **** **** {last4}
-        </Text>
+        <Flex justifyContent="space-between">
+          <Text fontWeight="600" fontSize={20}>
+            **** **** **** {last4}
+          </Text>
+          {extra}
+        </Flex>
         <Flex justifyContent="space-between">
           <Text fontSize={14} color="gray.400">
             {expirationMonth} / {expirationYear}
@@ -43,12 +47,17 @@ const PaymentCard = ({
   );
 };
 
+PaymentCard.defaultProps = {
+  extra: undefined,
+};
+
 PaymentCard.propTypes = {
   brand: PropTypes.oneOf(Object.keys(cardBrands)).isRequired,
   expirationYear: PropTypes.number.isRequired,
   expirationMonth: PropTypes.number.isRequired,
   funding: PropTypes.oneOf(Object.keys(funding)).isRequired,
   last4: PropTypes.string.isRequired,
+  extra: PropTypes.node,
 };
 
 export default PaymentCard;
