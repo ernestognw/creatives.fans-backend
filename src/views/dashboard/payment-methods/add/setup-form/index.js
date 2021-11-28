@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { Box, Button, useToast } from "@chakra-ui/react";
-import { useLocation, useHistory } from "react-router-dom";
-import { routes } from "@config/constants";
+import { Box, Button, useToast, Heading } from "@chakra-ui/react";
+import { useUser } from "@providers/user";
+import { useHistory } from "react-router-dom";
 import {
   useStripe,
   useElements,
@@ -12,8 +12,9 @@ const SetupForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const toast = useToast();
-  const { search } = useLocation();
-  const { push } = useHistory();
+  const [validating, setValidating] = useState(false);
+  const { reloadUser } = useUser();
+  const { go } = useHistory();
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -44,11 +45,12 @@ const SetupForm = () => {
   const validateStripeCallback = useCallback(async () => {
     if (!stripe) return;
 
-    const clientSecret = new URLSearchParams(search).get(
+    const clientSecret = new URLSearchParams(window.location.search).get(
       "setup_intent_client_secret"
     );
 
     if (!clientSecret) return;
+    setValidating(true);
 
     const { setupIntent } = await stripe.retrieveSetupIntent(clientSecret);
 
@@ -60,7 +62,7 @@ const SetupForm = () => {
           status: "success",
           isClosable: true,
         });
-        push(routes.DASHBOARD.PAYMENT_METHODS.MAIN);
+        await reloadUser();
         break;
 
       case "processing":
@@ -71,7 +73,6 @@ const SetupForm = () => {
           status: "success",
           isClosable: true,
         });
-        push(routes.DASHBOARD.PAYMENT_METHODS.MAIN);
         break;
 
       default:
@@ -82,9 +83,23 @@ const SetupForm = () => {
           isClosable: true,
         });
     }
-  }, [search, stripe, toast, push]);
+    go(-2);
+  }, [stripe, toast, go, reloadUser]);
 
-  useEffect(validateStripeCallback, [validateStripeCallback]);
+  useEffect(() => {
+    if (!validating) validateStripeCallback();
+  }, [validateStripeCallback, validating]);
+
+  if (
+    new URLSearchParams(window.location.search).get(
+      "setup_intent_client_secret"
+    )
+  )
+    return (
+      <Heading my={20} size="md" textAlign="center">
+        Validando tarjeta... 😎
+      </Heading>
+    );
 
   return (
     <Box as="form" onSubmit={handleSubmit}>

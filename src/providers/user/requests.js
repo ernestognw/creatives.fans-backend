@@ -16,6 +16,20 @@ const GET_USER = gql`
         twitter
         website
       }
+      stripeCustomer {
+        id
+        paymentMethods {
+          id
+          card {
+            id
+            expirationMonth
+            expirationYear
+            brand
+            funding
+            last4
+          }
+        }
+      }
     }
   }
 `;

@@ -27,7 +27,7 @@ const Add = () => {
     <Elements
       stripe={stripePromise}
       options={{
-        clientSecret: data.setupIntentByToken.clientSecret,
+        clientSecret: data.stripeSetupIntentByToken.clientSecret,
       }}
     >
       <SetupForm />

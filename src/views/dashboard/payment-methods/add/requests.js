@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const REQUEST_STRIPE_INTENT = gql`
-  query setupIntentByToken {
-    setupIntentByToken {
+  query stripeSetupIntentByToken {
+    stripeSetupIntentByToken {
       clientSecret
     }
   }
