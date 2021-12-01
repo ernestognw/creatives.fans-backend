@@ -70,7 +70,7 @@ const SupportModal = ({ isOpen, onClose, creative, refetch }) => {
       toast({
         title: "Ocurrió un error",
         description: errors[0].message,
-        status: "error",
+        status: "success",
         isClosable: true,
       });
     } else {
