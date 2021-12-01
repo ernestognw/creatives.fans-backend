@@ -34,7 +34,7 @@ const SupportModal = ({ isOpen, onClose, creative, refetch }) => {
   const [submitting, setSubmitting] = useState(false);
   const [tip, setTip] = useState(10);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(0);
-  const [sendTip, setSendTip] = useState(true);
+  const [sendTip, setSendTip] = useState(false);
   const [description, setDescription] = useState("");
   const toast = useToast();
   const {
