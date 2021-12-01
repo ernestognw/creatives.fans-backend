@@ -87,7 +87,7 @@ const SupportModal = ({ isOpen, onClose, creative, refetch }) => {
       setDescription("");
       setTip(0);
       setSelectedPaymentMethod(0);
-      setSendTip(true);
+      setSendTip(false);
     }
 
     setSubmitting(false);
